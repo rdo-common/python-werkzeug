@@ -3,14 +3,14 @@
 %global srcname Werkzeug
 
 Name:           python-werkzeug
-Version:        0.5.1
+Version:        0.6
 Release:        1%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
 License:        BSD
 URL:            http://werkzeug.pocoo.org/
-Source0:        http://pypi.python.org/packages/source/W/Werkzeug/%{srcname}-%{version}.zip
+Source0:        http://pypi.python.org/packages/source/W/Werkzeug/%{srcname}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -74,5 +74,7 @@ Documentation and examples for %{name}.
 %doc docs/_build/html examples
 
 %changelog
+* Sat Mar 05 2010 Peter Halliday <phalliday@excelsiorsystems.net> - 0.6-1
+- Updating because upstream release of Werkzeug 0.6
 * Tue Aug 25 2009 Peter Halliday <phalliday@excelsiorsystems.net> - 0.5.1-1
 - Initial package
