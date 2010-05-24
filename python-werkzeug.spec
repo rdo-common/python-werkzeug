@@ -3,7 +3,7 @@
 %global srcname Werkzeug
 
 Name:           python-werkzeug
-Version:        0.6
+Version:        0.6.2
 Release:        1%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
@@ -15,7 +15,6 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
 BuildRequires:  python-devel
-BuildRequires:  python-nose
 BuildRequires:  python-setuptools-devel
 
 %description
@@ -55,11 +54,14 @@ Documentation and examples for %{name}.
 
 %build
 %{__python} setup.py build
+find examples/ -name '*.py' -executable | xargs chmod -x
+find examples/ -name '*.png' -executable | xargs chmod -x
 
 %install
 %{__rm} -rf %{buildroot}
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 %{__rm} -rf docs/_build/html/.buildinfo
+%{__rm} -rf examples/cupoftee/db.pyc
 
 %clean
 %{__rm} -rf %{buildroot}
@@ -74,6 +76,8 @@ Documentation and examples for %{name}.
 %doc docs/_build/html examples
 
 %changelog
+* Sun May 23 2010 Peter Halliday <phalliday@excelsiorsystems.net> - 0.6.2-1
+- Updating because upstream release of Werkzeug 0.6.2
 * Sat Mar 05 2010 Peter Halliday <phalliday@excelsiorsystems.net> - 0.6-1
 - Updating because upstream release of Werkzeug 0.6
 * Tue Aug 25 2009 Peter Halliday <phalliday@excelsiorsystems.net> - 0.5.1-1
