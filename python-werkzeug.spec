@@ -4,7 +4,7 @@
 
 Name:           python-werkzeug
 Version:        0.6.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -76,6 +76,9 @@ find examples/ -name '*.png' -executable | xargs chmod -x
 %doc docs/_build/html examples
 
 %changelog
+* Thu Jul 22 2010 David Malcolm <dmalcolm@redhat.com> - 0.6.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Features/Python_2.7/MassRebuild
+
 * Sun May 23 2010 Peter Halliday <phalliday@excelsiorsystems.net> - 0.6.2-1
 - Updating because upstream release of Werkzeug 0.6.2
 * Sat Mar 05 2010 Peter Halliday <phalliday@excelsiorsystems.net> - 0.6-1
