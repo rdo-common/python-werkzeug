@@ -4,7 +4,7 @@
 
 Name:           python-werkzeug
 Version:        0.6.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -76,6 +76,9 @@ find examples/ -name '*.png' -executable | xargs chmod -x
 %doc docs/_build/html examples
 
 %changelog
+* Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.6.2-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Thu Jul 22 2010 David Malcolm <dmalcolm@redhat.com> - 0.6.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Features/Python_2.7/MassRebuild
 
