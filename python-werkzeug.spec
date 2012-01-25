@@ -3,8 +3,8 @@
 %global srcname Werkzeug
 
 Name:           python-werkzeug
-Version:        0.6.2
-Release:        4%{?dist}
+Version:        0.8.2
+Release:        1%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -16,6 +16,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python-devel
 BuildRequires:  python-setuptools-devel
+BuildRequires:  python-sphinx
 
 %description
 Werkzeug
@@ -47,15 +48,16 @@ Documentation and examples for %{name}.
 %prep
 %setup -q -n %{srcname}-%{version}
 %{__sed} -i 's/\r//' LICENSE
-%{__sed} -i 's/\r//' docs/makearchive.py
-%{__sed} -i 's/\r//' docs/_build/html/_static/pygments.css
-%{__sed} -i 's/\r//' docs/_build/html/objects.inv
-%{__sed} -i 's/\r//' PKG-INFO
+%{__sed} -i '1d' werkzeug/testsuite/multipart/collect.py
+
 
 %build
 %{__python} setup.py build
 find examples/ -name '*.py' -executable | xargs chmod -x
 find examples/ -name '*.png' -executable | xargs chmod -x
+pushd docs
+make html
+popd
 
 %install
 %{__rm} -rf %{buildroot}
@@ -76,6 +78,9 @@ find examples/ -name '*.png' -executable | xargs chmod -x
 %doc docs/_build/html examples
 
 %changelog
+* Wed Jan 25 2012 Haïkel Guémar <hguemar@fedoraproject.org> - 0.8.2-1
+- upstream 0.8.2
+
 * Sat Jan 14 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.6.2-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
