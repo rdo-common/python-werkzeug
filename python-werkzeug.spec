@@ -3,7 +3,7 @@
 %global srcname Werkzeug
 
 Name:           python-werkzeug
-Version:        0.8.2
+Version:        0.8.3
 Release:        1%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
@@ -78,6 +78,9 @@ popd
 %doc docs/_build/html examples
 
 %changelog
+* Sun Feb  5 2012 Haïkel Guémar <hguemar@fedoraproject.org> - 0.8.3-1
+- upstream 0.8.3 (fixes XSS security issues)
+
 * Wed Jan 25 2012 Haïkel Guémar <hguemar@fedoraproject.org> - 0.8.2-1
 - upstream 0.8.2
 
