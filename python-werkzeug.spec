@@ -3,8 +3,8 @@
 %global srcname Werkzeug
 
 Name:           python-werkzeug
-Version:        0.8.3
-Release:        3%{?dist}
+Version:        0.9
+Release:        1%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -78,6 +78,9 @@ popd
 %doc docs/_build/html examples
 
 %changelog
+* Fri Jun 14 2013 Ricky Elrod <codeblock@fedoraproject.org> - 0.9-1
+- Upstream 0.9.0 release.
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.8.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
