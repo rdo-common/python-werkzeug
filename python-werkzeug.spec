@@ -8,7 +8,7 @@
 
 Name:           python-werkzeug
 Version:        0.9.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -158,6 +158,9 @@ popd
 
 
 %changelog
+* Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.4-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Tue May 13 2014 Bohuslav Kabrda <bkabrda@redhat.com> - 0.9.4-2
 - Rebuilt for https://fedoraproject.org/wiki/Changes/Python_3.4
 
