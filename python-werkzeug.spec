@@ -7,7 +7,7 @@
 %global srcname Werkzeug
 
 Name:           python-werkzeug
-Version:        0.9.6
+Version:        0.10.4
 Release:        1%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
@@ -158,6 +158,9 @@ popd
 
 
 %changelog
+* Sat May 30 2015 Ricky Elrod <relrod@redhat.com> - 0.10.4-1
+- Upstream 0.10.4.
+
 * Fri Jul 18 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 0.9.6-1
 - Upstream 0.9.6
 - Fixes RHBZ #1105819
