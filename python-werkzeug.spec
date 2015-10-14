@@ -8,13 +8,16 @@
 
 Name:           python-werkzeug
 Version:        0.10.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
 License:        BSD
 URL:            http://werkzeug.pocoo.org/
 Source0:        http://pypi.python.org/packages/source/W/Werkzeug/%{srcname}-%{version}.tar.gz
+# Pypi version of werkzeug is missing _themes folder needed to build werkzeug sphinx docs
+# See https://github.com/mitsuhiko/werkzeug/issues/761
+Source1:        werkzeug-sphinx-theme.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -89,7 +92,8 @@ Documentation and examples for python3-werkzeug.
 %prep
 %setup -q -n %{srcname}-%{version}
 %{__sed} -i 's/\r//' LICENSE
-%{__sed} -i '1d' werkzeug/testsuite/multipart/collect.py
+%{__sed} -i '1d' tests/multipart/test_collect.py
+tar -xf %{SOURCE1}
 
 %if 0%{?with_python3}
 rm -rf %{py3dir}
@@ -158,6 +162,10 @@ popd
 
 
 %changelog
+* Wed Oct 14 2015 Robert Kuska <rkuska@redhat.com> - 0.10.4-3
+- Rebuilt for Python3.5 rebuild
+- Add werkzeug sphinx theme as a Source1
+
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.10.4-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
