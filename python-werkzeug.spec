@@ -7,7 +7,7 @@
 %global srcname Werkzeug
 
 Name:           python-werkzeug
-Version:        0.11.6
+Version:        0.11.10
 Release:        1%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
@@ -162,6 +162,10 @@ popd
 
 
 %changelog
+* Sat May 28 2016 Haïkel Guémar <hguemar@fedoraproject.org> - 0.11.10-1
+- Upstream 0.11.19
+- Fix unicode issues with python3
+
 * Thu Apr 14 2016 Haïkel Guémar <hguemar@fedoraproject.org> - 0.11.6-1
 - Upstream 0.11.6 (upstream #822)
 
