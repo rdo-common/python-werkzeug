@@ -8,7 +8,7 @@
 
 Name:           python-werkzeug
 Version:        0.11.10
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -162,6 +162,9 @@ popd
 
 
 %changelog
+* Tue Jul 19 2016 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.11.10-2
+- https://fedoraproject.org/wiki/Changes/Automatic_Provides_for_Python_RPM_Packages
+
 * Sat May 28 2016 Haïkel Guémar <hguemar@fedoraproject.org> - 0.11.10-1
 - Upstream 0.11.19
 - Fix unicode issues with python3
