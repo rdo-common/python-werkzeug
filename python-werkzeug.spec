@@ -8,7 +8,7 @@
 
 Name:           python-werkzeug
 Version:        0.11.10
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -107,6 +107,9 @@ find %{py3dir} -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
 find examples/ -name '*.py' -executable | xargs chmod -x
 find examples/ -name '*.png' -executable | xargs chmod -x
 pushd docs
+# Add a symlink to the dir with the Python module so that __version__ can be
+# obtained therefrom.
+ln -s ../werkzeug werkzeug
 make html
 popd
 
@@ -116,6 +119,9 @@ pushd %{py3dir}
 find examples/ -name '*.py' -executable | xargs chmod -x
 find examples/ -name '*.png' -executable | xargs chmod -x
 pushd docs
+# Add a symlink to the dir with the Python module so that __version__ can be
+# obtained therefrom.
+ln -s ../werkzeug werkzeug
 make html
 popd
 popd
@@ -162,6 +168,9 @@ popd
 
 
 %changelog
+* Tue Dec 13 2016 Tomas Orsava <torsava@redhat.com> - 0.11.10-3
+- Fixed the building of documentation
+
 * Tue Jul 19 2016 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.11.10-2
 - https://fedoraproject.org/wiki/Changes/Automatic_Provides_for_Python_RPM_Packages
 
