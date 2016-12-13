@@ -8,7 +8,7 @@
 
 Name:           python-werkzeug
 Version:        0.11.10
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -168,6 +168,9 @@ popd
 
 
 %changelog
+* Tue Dec 13 2016 Stratakis Charalampos <cstratak@redhat.com> - 0.11.10-4
+- Rebuild for Python 3.6
+
 * Tue Dec 13 2016 Tomas Orsava <torsava@redhat.com> - 0.11.10-3
 - Fixed the building of documentation
 
