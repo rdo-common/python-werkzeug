@@ -8,7 +8,7 @@
 
 Name:           python-werkzeug
 Version:        0.11.10
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -168,6 +168,9 @@ popd
 
 
 %changelog
+* Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.11.10-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Tue Dec 13 2016 Stratakis Charalampos <cstratak@redhat.com> - 0.11.10-4
 - Rebuild for Python 3.6
 
