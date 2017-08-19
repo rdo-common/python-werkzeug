@@ -8,7 +8,7 @@
 
 Name:           python-werkzeug
 Version:        0.11.10
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -25,24 +25,32 @@ BuildRequires:  python-devel
 BuildRequires:  python-setuptools
 BuildRequires:  python-sphinx
 
-%description
-Werkzeug
-========
+%global _description\
+Werkzeug\
+========\
+\
+Werkzeug started as simple collection of various utilities for WSGI\
+applications and has become one of the most advanced WSGI utility\
+modules.  It includes a powerful debugger, full featured request and\
+response objects, HTTP utilities to handle entity tags, cache control\
+headers, HTTP dates, cookie handling, file uploads, a powerful URL\
+routing system and a bunch of community contributed addon modules.\
+\
+Werkzeug is unicode aware and doesn't enforce a specific template\
+engine, database adapter or anything else.  It doesn't even enforce\
+a specific way of handling requests and leaves all that up to the\
+developer. It's most useful for end user applications which should work\
+on as many server environments as possible (such as blogs, wikis,\
+bulletin boards, etc.).\
 
-Werkzeug started as simple collection of various utilities for WSGI
-applications and has become one of the most advanced WSGI utility
-modules.  It includes a powerful debugger, full featured request and
-response objects, HTTP utilities to handle entity tags, cache control
-headers, HTTP dates, cookie handling, file uploads, a powerful URL
-routing system and a bunch of community contributed addon modules.
 
-Werkzeug is unicode aware and doesn't enforce a specific template
-engine, database adapter or anything else.  It doesn't even enforce
-a specific way of handling requests and leaves all that up to the
-developer. It's most useful for end user applications which should work
-on as many server environments as possible (such as blogs, wikis,
-bulletin boards, etc.).
+%description %_description
 
+%package -n python2-werkzeug
+Summary: %summary
+%{?python_provide:%python_provide python2-werkzeug}
+
+%description -n python2-werkzeug %_description
 
 %package doc
 Summary:        Documentation for %{name}
@@ -146,7 +154,7 @@ popd
 %clean
 %{__rm} -rf %{buildroot}
 
-%files
+%files -n python2-werkzeug
 %defattr(-,root,root,-)
 %doc AUTHORS LICENSE PKG-INFO CHANGES
 %{python_sitelib}/*
@@ -168,6 +176,10 @@ popd
 
 
 %changelog
+* Sat Aug 19 2017 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 0.11.10-7
+- Python 2 binary package renamed to python2-werkzeug
+  See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3
+
 * Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.11.10-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
