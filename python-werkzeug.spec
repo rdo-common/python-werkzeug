@@ -1,4 +1,4 @@
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 %global with_python3 1
 %else
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
@@ -8,7 +8,7 @@
 
 Name:           python-werkzeug
 Version:        0.11.10
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -176,6 +176,9 @@ popd
 
 
 %changelog
+* Fri Sep 29 2017 Troy Dawson <tdawson@redhat.com> - 0.11.10-8
+- Cleanup spec file conditionals
+
 * Sat Aug 19 2017 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 0.11.10-7
 - Python 2 binary package renamed to python2-werkzeug
   See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3
