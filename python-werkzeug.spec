@@ -2,7 +2,7 @@
 
 Name:           python-werkzeug
 Version:        0.12.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -145,6 +145,9 @@ popd
 
 
 %changelog
+* Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.12.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
 * Mon Nov 20 2017 Charalampos Stratakis <cstratak@redhat.com> - 0.12.2-1
 - Update to 0.12.2
 
