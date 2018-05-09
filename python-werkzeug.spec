@@ -1,8 +1,8 @@
 %global srcname Werkzeug
 
 Name:           python-werkzeug
-Version:        0.12.2
-Release:        2%{?dist}
+Version:        0.14.1
+Release:        1%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -12,6 +12,11 @@ Source0:        https://files.pythonhosted.org/packages/source/W/Werkzeug/%{srcn
 # Pypi version of werkzeug is missing _themes folder needed to build werkzeug sphinx docs
 # See https://github.com/mitsuhiko/werkzeug/issues/761
 Source1:        werkzeug-sphinx-theme.tar.gz
+
+# https://github.com/pallets/werkzeug/pull/1293
+# skip all tests that use xprocess when it's not installed (like here,
+# as it's not packaged for Fedora...)
+Patch0:         1293.patch
 
 BuildArch:      noarch
 
@@ -41,6 +46,15 @@ Summary: %summary
 
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
+# For tests
+BuildRequires:  python2-pytest
+BuildRequires:  python2-hypothesis
+BuildRequires:  python2-requests
+BuildRequires:  python2-pyOpenSSL
+BuildRequires:  python2-greenlet
+BuildRequires:  python2-redis
+BuildRequires:  python2-memcached
+BuildRequires:  python2-watchdog
 
 %{?python_provide:%python_provide python2-werkzeug}
 
@@ -63,6 +77,15 @@ Summary:        %summary
 
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
+# For tests
+BuildRequires:  python3-pytest
+BuildRequires:  python3-hypothesis
+BuildRequires:  python3-requests
+BuildRequires:  python3-pyOpenSSL
+BuildRequires:  python3-greenlet
+BuildRequires:  python3-redis
+BuildRequires:  python3-memcached
+BuildRequires:  python3-watchdog
 
 %{?python_provide:%python_provide python3-werkzeug}
 
@@ -82,7 +105,7 @@ Documentation and examples for python3-werkzeug.
 
 
 %prep
-%setup -q -n %{srcname}-%{version}
+%autosetup -p1 -n %{srcname}-%{version}
 %{__sed} -i 's/\r//' LICENSE
 %{__sed} -i '1d' tests/multipart/test_collect.py
 tar -xf %{SOURCE1}
@@ -127,6 +150,13 @@ pushd %{py3dir}
 %{__rm} -rf examples/cupoftee/db.pyc
 popd
 
+%check
+PYTHONPATH=./ py.test-2
+
+pushd %{py3dir}
+PYTHONPATH=./ py.test-3
+popd
+
 %files -n python2-werkzeug
 %license LICENSE
 %doc AUTHORS PKG-INFO CHANGES
@@ -145,6 +175,10 @@ popd
 
 
 %changelog
+* Wed May 09 2018 Adam Williamson <awilliam@redhat.com> - 0.14.1-1
+- Update to 0.14.1 (needed by httpbin)
+- Run tests during build
+
 * Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.12.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
