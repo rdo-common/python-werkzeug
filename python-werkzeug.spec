@@ -159,7 +159,7 @@ popd
 
 %files -n python2-werkzeug
 %license LICENSE
-%doc AUTHORS PKG-INFO CHANGES
+%doc AUTHORS PKG-INFO CHANGES.rst
 %{python2_sitelib}/*
 
 %files -n python2-werkzeug-doc
@@ -167,7 +167,7 @@ popd
 
 %files -n python3-werkzeug
 %license LICENSE
-%doc AUTHORS PKG-INFO CHANGES
+%doc AUTHORS PKG-INFO CHANGES.rst
 %{python3_sitelib}/*
 
 %files -n python3-werkzeug-doc
