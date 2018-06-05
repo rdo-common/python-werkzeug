@@ -2,7 +2,7 @@
 
 Name:           python-werkzeug
 Version:        0.14.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -54,7 +54,6 @@ BuildRequires:  python2-pyOpenSSL
 BuildRequires:  python2-greenlet
 BuildRequires:  python2-redis
 BuildRequires:  python2-memcached
-BuildRequires:  python2-watchdog
 
 %{?python_provide:%python_provide python2-werkzeug}
 
@@ -85,7 +84,6 @@ BuildRequires:  python3-pyOpenSSL
 BuildRequires:  python3-greenlet
 BuildRequires:  python3-redis
 BuildRequires:  python3-memcached
-BuildRequires:  python3-watchdog
 
 %{?python_provide:%python_provide python3-werkzeug}
 
@@ -175,6 +173,9 @@ popd
 
 
 %changelog
+* Tue Jun 05 2018 Miro Hrončok <mhroncok@redhat.com> - 0.14.1-2
+- Don't BR watchdog, it is not needed
+
 * Wed May 09 2018 Adam Williamson <awilliam@redhat.com> - 0.14.1-1
 - Update to 0.14.1 (needed by httpbin)
 - Run tests during build
