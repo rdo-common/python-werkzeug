@@ -2,7 +2,7 @@
 
 Name:           python-werkzeug
 Version:        0.14.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -132,9 +132,10 @@ pushd docs
 # Add a symlink to the dir with the Python module so that __version__ can be
 # obtained therefrom.
 ln -s ../werkzeug werkzeug
-make html
+make SPHINXBUILD=sphinx-build-3 html
 popd
 popd
+mv %{py3dir}/docs ./docs3
 
 
 %install
@@ -169,10 +170,13 @@ popd
 %{python3_sitelib}/*
 
 %files -n python3-werkzeug-doc
-%doc docs/_build/html examples
+%doc docs3/_build/html examples
 
 
 %changelog
+* Mon Jul 16 2018 Miro Hrončok <mhroncok@redhat.com> - 0.14.1-5
+- Make sure we ship Python 3 docs in the Python 3 docs package
+
 * Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.14.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
