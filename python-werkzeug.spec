@@ -2,7 +2,7 @@
 
 Name:           python-werkzeug
 Version:        0.14.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 Group:          Development/Libraries
@@ -173,6 +173,9 @@ popd
 
 
 %changelog
+* Mon Jun 18 2018 Miro Hrončok <mhroncok@redhat.com> - 0.14.1-3
+- Rebuilt for Python 3.7
+
 * Tue Jun 05 2018 Miro Hrončok <mhroncok@redhat.com> - 0.14.1-2
 - Don't BR watchdog, it is not needed
 
