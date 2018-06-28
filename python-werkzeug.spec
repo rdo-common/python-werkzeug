@@ -1,5 +1,9 @@
 %global srcname Werkzeug
 
+%if 0%{?fedora}
+%global with_python3 1
+%endif
+
 Name:           python-werkzeug
 Version:        0.14.1
 Release:        3%{?dist}
@@ -52,8 +56,8 @@ BuildRequires:  python2-hypothesis
 BuildRequires:  python2-requests
 BuildRequires:  python2-pyOpenSSL
 BuildRequires:  python2-greenlet
-BuildRequires:  python2-redis
-BuildRequires:  python2-memcached
+BuildRequires:  python-redis
+BuildRequires:  python-memcached
 
 %{?python_provide:%python_provide python2-werkzeug}
 
@@ -71,6 +75,7 @@ Requires:       python2-werkzeug = %{version}-%{release}
 Documentation and examples for %{name}.
 
 
+%if 0%{?with_python3}
 %package -n python3-werkzeug
 Summary:        %summary
 
@@ -100,6 +105,7 @@ Requires:       python3-werkzeug = %{version}-%{release}
 
 %description -n python3-werkzeug-doc
 Documentation and examples for python3-werkzeug.
+%endif
 
 
 %prep
@@ -108,9 +114,11 @@ Documentation and examples for python3-werkzeug.
 %{__sed} -i '1d' tests/multipart/test_collect.py
 tar -xf %{SOURCE1}
 
+%if 0%{?with_python3}
 rm -rf %{py3dir}
 cp -a . %{py3dir}
 find %{py3dir} -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
+%endif
 
 
 %build
@@ -124,6 +132,7 @@ ln -s ../werkzeug werkzeug
 make html
 popd
 
+%if 0%{?with_python3}
 pushd %{py3dir}
 %py3_build
 find examples/ -name '*.py' -executable | xargs chmod -x
@@ -135,6 +144,7 @@ ln -s ../werkzeug werkzeug
 make html
 popd
 popd
+%endif
 
 
 %install
@@ -142,18 +152,22 @@ popd
 %{__rm} -rf docs/_build/html/.buildinfo
 %{__rm} -rf examples/cupoftee/db.pyc
 
+%if 0%{?with_python3}
 pushd %{py3dir}
 %py3_install
 %{__rm} -rf docs/_build/html/.buildinfo
 %{__rm} -rf examples/cupoftee/db.pyc
 popd
+%endif
 
 %check
 PYTHONPATH=./ py.test-2
 
+%if 0%{?with_python3}
 pushd %{py3dir}
 PYTHONPATH=./ py.test-3
 popd
+%endif
 
 %files -n python2-werkzeug
 %license LICENSE
@@ -163,6 +177,7 @@ popd
 %files -n python2-werkzeug-doc
 %doc docs/_build/html examples
 
+%if 0%{?with_python3}
 %files -n python3-werkzeug
 %license LICENSE
 %doc AUTHORS PKG-INFO CHANGES.rst
@@ -170,6 +185,7 @@ popd
 
 %files -n python3-werkzeug-doc
 %doc docs/_build/html examples
+%endif
 
 
 %changelog
