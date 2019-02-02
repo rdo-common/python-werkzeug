@@ -2,7 +2,7 @@
 
 Name:           python-werkzeug
 Version:        0.14.1
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 License:        BSD
@@ -173,6 +173,9 @@ popd
 
 
 %changelog
+* Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.14.1-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Mon Jul 16 2018 Miro Hrončok <mhroncok@redhat.com> - 0.14.1-5
 - Make sure we ship Python 3 docs in the Python 3 docs package
 
