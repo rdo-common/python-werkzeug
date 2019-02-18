@@ -2,7 +2,7 @@
 
 Name:           python-werkzeug
 Version:        0.14.1
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 License:        BSD
@@ -16,6 +16,9 @@ Source1:        werkzeug-sphinx-theme.tar.gz
 # skip all tests that use xprocess when it's not installed (like here,
 # as it's not packaged for Fedora...)
 Patch0:         1293.patch
+
+# Use sys.executable in tests
+Patch1:         https://github.com/pallets/werkzeug/pull/1455.patch
 
 BuildArch:      noarch
 
@@ -173,6 +176,9 @@ popd
 
 
 %changelog
+* Sun Feb 17 2019 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 0.14.1-7
+- Backport fix to tests using 'python' command
+
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.14.1-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
