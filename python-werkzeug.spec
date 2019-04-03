@@ -2,7 +2,7 @@
 
 Name:           python-werkzeug
 Version:        0.14.1
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 License:        BSD
@@ -57,21 +57,12 @@ BuildRequires:  python2-greenlet
 BuildRequires:  python2-redis
 BuildRequires:  python2-memcached
 
+# Don't remove before Fedora 33:
+Obsoletes:      python2-werkzeug-doc < 0.14.1-8
+
 %{?python_provide:%python_provide python2-werkzeug}
 
 %description -n python2-werkzeug %_description
-
-%package -n python2-werkzeug-doc
-Summary:        Documentation for %{name}
-
-BuildRequires:  python2-sphinx
-
-Requires:       python2-werkzeug = %{version}-%{release}
-%{?python_provide:%python_provide python2-werkzeug-doc}
-
-%description -n python2-werkzeug-doc
-Documentation and examples for %{name}.
-
 
 %package -n python3-werkzeug
 Summary:        %summary
@@ -119,12 +110,6 @@ find %{py3dir} -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
 %py2_build
 find examples/ -name '*.py' -executable | xargs chmod -x
 find examples/ -name '*.png' -executable | xargs chmod -x
-pushd docs
-# Add a symlink to the dir with the Python module so that __version__ can be
-# obtained therefrom.
-ln -s ../werkzeug werkzeug
-make html
-popd
 
 pushd %{py3dir}
 %py3_build
@@ -163,9 +148,6 @@ popd
 %doc AUTHORS PKG-INFO CHANGES.rst
 %{python2_sitelib}/*
 
-%files -n python2-werkzeug-doc
-%doc docs/_build/html examples
-
 %files -n python3-werkzeug
 %license LICENSE
 %doc AUTHORS PKG-INFO CHANGES.rst
@@ -176,6 +158,10 @@ popd
 
 
 %changelog
+* Wed Apr 03 2019 Miro Hrončok <mhroncok@redhat.com> - 0.14.1-8
+- Remove python2-werkzeug-doc
+  https://fedoraproject.org/wiki/Changes/Sphinx2
+
 * Sun Feb 17 2019 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 0.14.1-7
 - Backport fix to tests using 'python' command
 
