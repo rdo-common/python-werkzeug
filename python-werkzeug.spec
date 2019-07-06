@@ -20,6 +20,10 @@ Patch0:         1293.patch
 # Use sys.executable in tests
 Patch1:         https://github.com/pallets/werkzeug/pull/1455.patch
 
+# Python 3.8 support in tests
+# https://github.com/pallets/werkzeug/commit/e060800e8e6e0c611f9439d746bd4da99a314b79
+Patch2:         python38.patch
+
 BuildArch:      noarch
 
 %global _description\
