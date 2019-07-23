@@ -2,7 +2,7 @@
 
 Name:           python-werkzeug
 Version:        0.14.1
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 License:        BSD
@@ -56,10 +56,6 @@ BuildRequires:  python2-setuptools
 BuildRequires:  python2-pytest
 BuildRequires:  python2-hypothesis
 BuildRequires:  python2-requests
-BuildRequires:  python2-pyOpenSSL
-BuildRequires:  python2-greenlet
-BuildRequires:  python2-redis
-BuildRequires:  python2-memcached
 
 # Don't remove before Fedora 33:
 Obsoletes:      python2-werkzeug-doc < 0.14.1-8
@@ -162,6 +158,10 @@ popd
 
 
 %changelog
+* Mon Jul 29 2019 Petr Viktorin <pviktori@redhat.com> - 0.14.1-10
+- Remove non-essential Python 2 test dependencies
+  https://fedoraproject.org/wiki/Changes/F31_Mass_Python_2_Package_Removal#Removing_Requirements
+
 * Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.14.1-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
