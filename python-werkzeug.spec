@@ -137,10 +137,12 @@ pushd %{py3dir}
 popd
 
 %check
-PYTHONPATH=./ py.test-2
+# PYTHONPATH=./ is usually unnecessary with pytest, but it is needed here
+# for testing werkzeug's reloader.
+PYTHONPATH=./ %{__python2} -m pytest
 
 pushd %{py3dir}
-PYTHONPATH=./ py.test-3
+PYTHONPATH=./ %{__python3} -m pytest
 popd
 
 %files -n python2-werkzeug
@@ -161,6 +163,7 @@ popd
 * Mon Jul 29 2019 Petr Viktorin <pviktori@redhat.com> - 0.14.1-10
 - Remove non-essential Python 2 test dependencies
   https://fedoraproject.org/wiki/Changes/F31_Mass_Python_2_Package_Removal#Removing_Requirements
+- Use system Python interpreter in tests
 
 * Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.14.1-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
