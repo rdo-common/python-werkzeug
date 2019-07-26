@@ -2,7 +2,7 @@
 
 Name:           python-werkzeug
 Version:        0.14.1
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 License:        BSD
@@ -162,6 +162,9 @@ popd
 
 
 %changelog
+* Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.14.1-9
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Wed Apr 03 2019 Miro Hrončok <mhroncok@redhat.com> - 0.14.1-8
 - Remove python2-werkzeug-doc
   https://fedoraproject.org/wiki/Changes/Sphinx2
