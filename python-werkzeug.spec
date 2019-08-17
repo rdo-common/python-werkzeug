@@ -2,7 +2,7 @@
 
 Name:           python-werkzeug
 Version:        0.14.1
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 License:        BSD
@@ -160,6 +160,9 @@ popd
 
 
 %changelog
+* Sat Aug 17 2019 Miro Hrončok <mhroncok@redhat.com> - 0.14.1-11
+- Rebuilt for Python 3.8
+
 * Mon Jul 29 2019 Petr Viktorin <pviktori@redhat.com> - 0.14.1-10
 - Remove non-essential Python 2 test dependencies
   https://fedoraproject.org/wiki/Changes/F31_Mass_Python_2_Package_Removal#Removing_Requirements
