@@ -2,7 +2,7 @@
 
 Name:           python-werkzeug
 Version:        0.14.1
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 License:        BSD
@@ -47,23 +47,6 @@ bulletin boards, etc.).\
 
 %description %_description
 
-%package -n python2-werkzeug
-Summary: %summary
-
-BuildRequires:  python2-devel
-BuildRequires:  python2-setuptools
-# For tests
-BuildRequires:  python2-pytest
-BuildRequires:  python2-hypothesis
-BuildRequires:  python2-requests
-
-# Don't remove before Fedora 33:
-Obsoletes:      python2-werkzeug-doc < 0.14.1-8
-
-%{?python_provide:%python_provide python2-werkzeug}
-
-%description -n python2-werkzeug %_description
-
 %package -n python3-werkzeug
 Summary:        %summary
 
@@ -101,17 +84,10 @@ Documentation and examples for python3-werkzeug.
 %{__sed} -i '1d' tests/multipart/test_collect.py
 tar -xf %{SOURCE1}
 
-rm -rf %{py3dir}
-cp -a . %{py3dir}
-find %{py3dir} -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
+find . -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
 
 
 %build
-%py2_build
-find examples/ -name '*.py' -executable | xargs chmod -x
-find examples/ -name '*.png' -executable | xargs chmod -x
-
-pushd %{py3dir}
 %py3_build
 find examples/ -name '*.py' -executable | xargs chmod -x
 find examples/ -name '*.png' -executable | xargs chmod -x
@@ -121,34 +97,15 @@ pushd docs
 ln -s ../werkzeug werkzeug
 make SPHINXBUILD=sphinx-build-3 html
 popd
-popd
-mv %{py3dir}/docs ./docs3
 
 
 %install
-%py2_install
-%{__rm} -rf docs/_build/html/.buildinfo
-%{__rm} -rf examples/cupoftee/db.pyc
-
-pushd %{py3dir}
 %py3_install
 %{__rm} -rf docs/_build/html/.buildinfo
 %{__rm} -rf examples/cupoftee/db.pyc
-popd
 
 %check
-# PYTHONPATH=./ is usually unnecessary with pytest, but it is needed here
-# for testing werkzeug's reloader.
-PYTHONPATH=./ %{__python2} -m pytest
-
-pushd %{py3dir}
 PYTHONPATH=./ %{__python3} -m pytest
-popd
-
-%files -n python2-werkzeug
-%license LICENSE
-%doc AUTHORS PKG-INFO CHANGES.rst
-%{python2_sitelib}/*
 
 %files -n python3-werkzeug
 %license LICENSE
@@ -156,10 +113,14 @@ popd
 %{python3_sitelib}/*
 
 %files -n python3-werkzeug-doc
-%doc docs3/_build/html examples
+%doc docs/_build/html examples
 
 
 %changelog
+* Wed Sep 18 2019 Miro Hrončok <mhroncok@redhat.com> - 0.14.1-12
+- Subpackage python2-werkzeug has been removed
+  See https://fedoraproject.org/wiki/Changes/Mass_Python_2_Package_Removal
+
 * Sat Aug 17 2019 Miro Hrončok <mhroncok@redhat.com> - 0.14.1-11
 - Rebuilt for Python 3.8
 
