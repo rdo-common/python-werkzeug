@@ -88,7 +88,7 @@ popd
 %{__rm} -rf examples/cupoftee/db.pyc
 
 %check
-PYTHONPATH=./src/ %{__python3} -m pytest -k 'not test_windows_get_args_for_reloading'
+PYTHONPATH=./src/ pytest-3
 
 %files -n python3-werkzeug
 %license LICENSE.rst
