@@ -1,28 +1,13 @@
 %global srcname Werkzeug
 
 Name:           python-werkzeug
-Version:        0.14.1
-Release:        12%{?dist}
+Version:        0.16.0
+Release:        1%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 License:        BSD
 URL:            http://werkzeug.pocoo.org/
 Source0:        https://files.pythonhosted.org/packages/source/W/Werkzeug/%{srcname}-%{version}.tar.gz
-# Pypi version of werkzeug is missing _themes folder needed to build werkzeug sphinx docs
-# See https://github.com/mitsuhiko/werkzeug/issues/761
-Source1:        werkzeug-sphinx-theme.tar.gz
-
-# https://github.com/pallets/werkzeug/pull/1293
-# skip all tests that use xprocess when it's not installed (like here,
-# as it's not packaged for Fedora...)
-Patch0:         1293.patch
-
-# Use sys.executable in tests
-Patch1:         https://github.com/pallets/werkzeug/pull/1455.patch
-
-# Python 3.8 support in tests
-# https://github.com/pallets/werkzeug/commit/e060800e8e6e0c611f9439d746bd4da99a314b79
-Patch2:         python38.patch
 
 BuildArch:      noarch
 
@@ -60,6 +45,9 @@ BuildRequires:  python3-pyOpenSSL
 BuildRequires:  python3-greenlet
 BuildRequires:  python3-redis
 BuildRequires:  python3-memcached
+# for docs
+BuildRequires:  python3-Pallets-Sphinx-Themes
+BuildRequires:  python3-sphinx-issues
 
 %{?python_provide:%python_provide python3-werkzeug}
 
@@ -80,9 +68,7 @@ Documentation and examples for python3-werkzeug.
 
 %prep
 %autosetup -p1 -n %{srcname}-%{version}
-%{__sed} -i 's/\r//' LICENSE
 %{__sed} -i '1d' tests/multipart/test_collect.py
-tar -xf %{SOURCE1}
 
 find . -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
 
@@ -92,10 +78,7 @@ find . -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
 find examples/ -name '*.py' -executable | xargs chmod -x
 find examples/ -name '*.png' -executable | xargs chmod -x
 pushd docs
-# Add a symlink to the dir with the Python module so that __version__ can be
-# obtained therefrom.
-ln -s ../werkzeug werkzeug
-make SPHINXBUILD=sphinx-build-3 html
+make PYTHONPATH=../src/ SPHINXBUILD=sphinx-build-3 html
 popd
 
 
@@ -105,11 +88,11 @@ popd
 %{__rm} -rf examples/cupoftee/db.pyc
 
 %check
-PYTHONPATH=./ %{__python3} -m pytest
+PYTHONPATH=./src/ %{__python3} -m pytest -k 'not test_windows_get_args_for_reloading'
 
 %files -n python3-werkzeug
-%license LICENSE
-%doc AUTHORS PKG-INFO CHANGES.rst
+%license LICENSE.rst
+%doc PKG-INFO CHANGES.rst
 %{python3_sitelib}/*
 
 %files -n python3-werkzeug-doc
@@ -117,6 +100,9 @@ PYTHONPATH=./ %{__python3} -m pytest
 
 
 %changelog
+* Tue Jan 07 2020 Lumír Balhar <lbalhar@redhat.com> - 0.16.0-1
+- New upstream version 0.16.0 (#1690599)
+
 * Wed Sep 18 2019 Miro Hrončok <mhroncok@redhat.com> - 0.14.1-12
 - Subpackage python2-werkzeug has been removed
   See https://fedoraproject.org/wiki/Changes/Mass_Python_2_Package_Removal
