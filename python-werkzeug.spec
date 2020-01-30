@@ -2,7 +2,7 @@
 
 Name:           python-werkzeug
 Version:        0.16.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        The Swiss Army knife of Python web development 
 
 License:        BSD
@@ -100,6 +100,9 @@ PYTHONPATH=./src/ pytest-3
 
 
 %changelog
+* Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.16.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Tue Jan 07 2020 Lumír Balhar <lbalhar@redhat.com> - 0.16.0-1
 - New upstream version 0.16.0 (#1690599)
 
