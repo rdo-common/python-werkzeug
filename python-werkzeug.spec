@@ -1,66 +1,63 @@
 %global srcname Werkzeug
+%global modname werkzeug
 
-Name:           python-werkzeug
-Version:        0.16.0
-Release:        2%{?dist}
-Summary:        The Swiss Army knife of Python web development 
+Name:           python-%{modname}
+Version:        1.0.1
+Release:        1%{?dist}
+Summary:        Comprehensive WSGI web application library
 
 License:        BSD
-URL:            http://werkzeug.pocoo.org/
-Source0:        https://files.pythonhosted.org/packages/source/W/Werkzeug/%{srcname}-%{version}.tar.gz
+URL:            https://werkzeug.palletsprojects.com
+Source0:        %{pypi_source}
 
 BuildArch:      noarch
 
-%global _description\
-Werkzeug\
-========\
-\
-Werkzeug started as simple collection of various utilities for WSGI\
-applications and has become one of the most advanced WSGI utility\
-modules.  It includes a powerful debugger, full featured request and\
-response objects, HTTP utilities to handle entity tags, cache control\
-headers, HTTP dates, cookie handling, file uploads, a powerful URL\
-routing system and a bunch of community contributed addon modules.\
-\
-Werkzeug is unicode aware and doesn't enforce a specific template\
-engine, database adapter or anything else.  It doesn't even enforce\
-a specific way of handling requests and leaves all that up to the\
-developer. It's most useful for end user applications which should work\
-on as many server environments as possible (such as blogs, wikis,\
-bulletin boards, etc.).\
+%global _description %{expand:
+Werkzeug
+========
 
+Werkzeug started as simple collection of various utilities for WSGI
+applications and has become one of the most advanced WSGI utility
+modules.  It includes a powerful debugger, full featured request and
+response objects, HTTP utilities to handle entity tags, cache control
+headers, HTTP dates, cookie handling, file uploads, a powerful URL
+routing system and a bunch of community contributed addon modules.
 
-%description %_description
+Werkzeug is unicode aware and doesn't enforce a specific template
+engine, database adapter or anything else.  It doesn't even enforce
+a specific way of handling requests and leaves all that up to the
+developer. It's most useful for end user applications which should work
+on as many server environments as possible (such as blogs, wikis,
+bulletin boards, etc.).}
 
-%package -n python3-werkzeug
-Summary:        %summary
+%description %{_description}
 
+%package -n python3-%{modname}
+Summary:        %{summary}
+%{?python_provide:%python_provide python3-%{modname}}
 BuildRequires:  python3-devel
-BuildRequires:  python3-setuptools
+BuildRequires:  python3dist(setuptools)
 # For tests
-BuildRequires:  python3-pytest
-BuildRequires:  python3-hypothesis
-BuildRequires:  python3-requests
-BuildRequires:  python3-pyOpenSSL
-BuildRequires:  python3-greenlet
-BuildRequires:  python3-redis
-BuildRequires:  python3-memcached
-# for docs
-BuildRequires:  python3-Pallets-Sphinx-Themes
-BuildRequires:  python3-sphinx-issues
+BuildRequires:  python3dist(pytest)
+BuildRequires:  python3dist(pytest-timeout)
+# Makes tests unreliable
+#BuildRequires:  python3dist(pytest-xprocess)
+BuildRequires:  python3dist(requests)
+BuildRequires:  python3dist(requests-unixsocket)
+BuildRequires:  python3dist(cryptography)
+BuildRequires:  python3dist(greenlet)
+BuildRequires:  python3dist(watchdog)
 
-%{?python_provide:%python_provide python3-werkzeug}
-
-%description -n python3-werkzeug %_description
-
+%description -n python3-%{modname} %{_description}
 
 %package -n python3-werkzeug-doc
 Summary:        Documentation for python3-werkzeug
-
-BuildRequires:  python3-sphinx
-
-Requires:       python3-werkzeug = %{version}-%{release}
 %{?python_provide:%python_provide python3-werkzeug-doc}
+BuildRequires:  python3dist(sphinx)
+BuildRequires:  python3dist(pallets-sphinx-themes)
+BuildRequires:  python3dist(sphinx-issues)
+BuildRequires:  python3dist(sphinxcontrib-log-cabinet)
+Requires:       python3-werkzeug = %{version}-%{release}
 
 %description -n python3-werkzeug-doc
 Documentation and examples for python3-werkzeug.
@@ -68,38 +65,34 @@ Documentation and examples for python3-werkzeug.
 
 %prep
 %autosetup -p1 -n %{srcname}-%{version}
-%{__sed} -i '1d' tests/multipart/test_collect.py
-
-find . -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
-
+find examples/ -type f -name '*.png' -executable -print -exec chmod -x "{}" +
 
 %build
 %py3_build
-find examples/ -name '*.py' -executable | xargs chmod -x
-find examples/ -name '*.png' -executable | xargs chmod -x
 pushd docs
 make PYTHONPATH=../src/ SPHINXBUILD=sphinx-build-3 html
+rm -v _build/html/.buildinfo
 popd
-
 
 %install
 %py3_install
-%{__rm} -rf docs/_build/html/.buildinfo
-%{__rm} -rf examples/cupoftee/db.pyc
 
 %check
 PYTHONPATH=./src/ pytest-3
 
-%files -n python3-werkzeug
+%files -n python3-%{modname}
 %license LICENSE.rst
-%doc PKG-INFO CHANGES.rst
-%{python3_sitelib}/*
+%doc CHANGES.rst README.rst
+%{python3_sitelib}/%{srcname}-*.egg-info/
+%{python3_sitelib}/%{modname}/
 
 %files -n python3-werkzeug-doc
 %doc docs/_build/html examples
 
-
 %changelog
+* Wed Apr 08 2020 Igor Raits <ignatenkobrain@fedoraproject.org> - 1.0.1-1
+- Update to 1.0.1
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.16.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
