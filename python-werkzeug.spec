@@ -3,7 +3,7 @@
 
 Name:           python-%{modname}
 Version:        1.0.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Comprehensive WSGI web application library
 
 License:        BSD
@@ -90,6 +90,9 @@ PYTHONPATH=./src/ pytest-3
 %doc docs/_build/html examples
 
 %changelog
+* Sat May 23 2020 Miro Hrončok <mhroncok@redhat.com> - 1.0.1-2
+- Rebuilt for Python 3.9
+
 * Wed Apr 08 2020 Igor Raits <ignatenkobrain@fedoraproject.org> - 1.0.1-1
 - Update to 1.0.1
 
