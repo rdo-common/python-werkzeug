@@ -46,7 +46,6 @@ BuildRequires:  python3dist(requests)
 BuildRequires:  python3dist(requests-unixsocket)
 BuildRequires:  python3dist(cryptography)
 BuildRequires:  python3dist(greenlet)
-BuildRequires:  python3dist(watchdog)
 
 %description -n python3-%{modname} %{_description}
 
