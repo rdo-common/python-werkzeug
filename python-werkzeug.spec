@@ -1,3 +1,5 @@
+%{?python_enable_dependency_generator}
+
 %global srcname Werkzeug
 %global modname werkzeug
 
@@ -43,7 +45,8 @@ BuildRequires:  python3dist(pytest-timeout)
 # Makes tests unreliable
 #BuildRequires:  python3dist(pytest-xprocess)
 BuildRequires:  python3dist(requests)
-BuildRequires:  python3dist(requests-unixsocket)
+# optional test dep
+#BuildRequires:  python3dist(requests-unixsocket)
 BuildRequires:  python3dist(cryptography)
 BuildRequires:  python3dist(greenlet)
 
@@ -55,7 +58,8 @@ Summary:        Documentation for python3-werkzeug
 BuildRequires:  python3dist(sphinx)
 BuildRequires:  python3dist(pallets-sphinx-themes)
 BuildRequires:  python3dist(sphinx-issues)
-BuildRequires:  python3dist(sphinxcontrib-log-cabinet)
+# Not available in CBS
+#BuildRequires:  python3dist(sphinxcontrib-log-cabinet)
 Requires:       python3-werkzeug = %{version}-%{release}
 
 %description -n python3-werkzeug-doc
@@ -69,6 +73,8 @@ find examples/ -type f -name '*.png' -executable -print -exec chmod -x "{}" +
 %build
 %py3_build
 pushd docs
+# Package sphinxcontrib-log-cabinet not available in CBS
+sed -i '/sphinxcontrib.log_cabinet/d' conf.py
 make PYTHONPATH=../src/ SPHINXBUILD=sphinx-build-3 html
 rm -v _build/html/.buildinfo
 popd
