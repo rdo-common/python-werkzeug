@@ -35,6 +35,7 @@ bulletin boards, etc.).}
 %package -n python3-%{modname}
 Summary:        %{summary}
 %{?python_provide:%python_provide python3-%{modname}}
+BuildRequires: make
 BuildRequires:  python3-devel
 BuildRequires:  python3dist(setuptools)
 # For tests
