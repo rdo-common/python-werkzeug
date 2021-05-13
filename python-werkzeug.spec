@@ -3,7 +3,7 @@
 
 Name:           python-%{modname}
 Version:        1.0.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Comprehensive WSGI web application library
 
 License:        BSD
@@ -78,7 +78,8 @@ popd
 %py3_install
 
 %check
-PYTHONPATH=./src/ pytest-3
+# see https://bugzilla.redhat.com/show_bug.cgi?id=1928083
+%pytest -p no:unraisableexception
 
 %files -n python3-%{modname}
 %license LICENSE.rst
@@ -90,6 +91,10 @@ PYTHONPATH=./src/ pytest-3
 %doc docs/_build/html examples
 
 %changelog
+* Thu May 13 2021 Miro Hrončok <mhroncok@redhat.com> - 1.0.1-5
+- Workaround failing tests with pytest 6.2+
+- Fixes: rhbz#1928083
+
 * Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
