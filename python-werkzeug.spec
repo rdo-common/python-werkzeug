@@ -3,7 +3,7 @@
 
 Name:           python-%{modname}
 Version:        1.0.1
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Comprehensive WSGI web application library
 
 License:        BSD
@@ -91,6 +91,9 @@ popd
 %doc docs/_build/html examples
 
 %changelog
+* Thu Jun 03 2021 Python Maint <python-maint@redhat.com> - 1.0.1-6
+- Rebuilt for Python 3.10
+
 * Thu May 13 2021 Miro Hrončok <mhroncok@redhat.com> - 1.0.1-5
 - Workaround failing tests with pytest 6.2+
 - Fixes: rhbz#1928083
