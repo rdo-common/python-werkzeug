@@ -2,13 +2,20 @@
 %global modname werkzeug
 
 Name:           python-%{modname}
-Version:        1.0.1
-Release:        6%{?dist}
+Version:        2.0.1
+Release:        1%{?dist}
 Summary:        Comprehensive WSGI web application library
 
 License:        BSD
 URL:            https://werkzeug.palletsprojects.com
 Source0:        %{pypi_source}
+
+# Fixes PYTHONPATH handling in tests
+# Upstream: https://github.com/pallets/werkzeug/pull/2172
+Patch0:         preserve-any-existing-PYTHONPATH-in-tests.patch
+# Fixes deprecations in Python 3.10
+# Upstream: https://github.com/pallets/werkzeug/commit/584f3cff7d5cb8a588189ae1137b814cf5c47e05
+Patch1:         py310-deprecations.patch
 
 BuildArch:      noarch
 
@@ -41,12 +48,12 @@ BuildRequires:  python3dist(setuptools)
 # For tests
 BuildRequires:  python3dist(pytest)
 BuildRequires:  python3dist(pytest-timeout)
-# Makes tests unreliable
-#BuildRequires:  python3dist(pytest-xprocess)
+BuildRequires:  python3dist(pytest-xprocess)
 BuildRequires:  python3dist(requests)
 BuildRequires:  python3dist(requests-unixsocket)
 BuildRequires:  python3dist(cryptography)
 BuildRequires:  python3dist(greenlet)
+BuildRequires:  python3dist(watchdog)
 
 %description -n python3-%{modname} %{_description}
 
@@ -78,8 +85,7 @@ popd
 %py3_install
 
 %check
-# see https://bugzilla.redhat.com/show_bug.cgi?id=1928083
-%pytest -p no:unraisableexception
+%pytest
 
 %files -n python3-%{modname}
 %license LICENSE.rst
@@ -91,6 +97,10 @@ popd
 %doc docs/_build/html examples
 
 %changelog
+* Tue Jun 22 2021 Lumír Balhar <lbalhar@redhat.com> - 2.0.1-1
+- Update to 2.0.1
+Resolves: rhbz#1795102
+
 * Thu Jun 03 2021 Python Maint <python-maint@redhat.com> - 1.0.1-6
 - Rebuilt for Python 3.10
 
