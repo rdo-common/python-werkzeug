@@ -3,7 +3,7 @@
 
 Name:           python-%{modname}
 Version:        2.0.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Comprehensive WSGI web application library
 
 License:        BSD
@@ -97,6 +97,9 @@ popd
 %doc docs/_build/html examples
 
 %changelog
+* Fri Jul 23 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Tue Jun 22 2021 Lumír Balhar <lbalhar@redhat.com> - 2.0.1-1
 - Update to 2.0.1
 Resolves: rhbz#1795102
