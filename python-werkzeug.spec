@@ -52,11 +52,15 @@ BuildRequires:  python3dist(pytest)
 BuildRequires:  python3dist(pytest-timeout)
 BuildRequires:  python3dist(pytest-xprocess)
 BuildRequires:  python3dist(requests)
+%if 0%{?rhel} == 8
+BuildRequires:  python3dist(dataclasses)
+%endif
 # optional test dep
 #BuildRequires:  python3dist(requests-unixsocket)
 BuildRequires:  python3dist(cryptography)
 BuildRequires:  python3dist(greenlet)
-BuildRequires:  python3dist(watchdog)
+# Not available in CBS
+#BuildRequires:  python3dist(watchdog)
 
 %description -n python3-%{modname} %{_description}
 
@@ -91,7 +95,10 @@ popd
 %py3_install
 
 %check
-%pytest
+# pytest>=6.2.0 is needed
+sed -i '/PytestUnraisableExceptionWarning/d' tests/*.py tests/middleware/test_http_proxy.py
+# test_reloader_sys_path needs watchdog
+%pytest -k "not test_reloader_sys_path"
 
 %files -n python3-%{modname}
 %license LICENSE.rst
