@@ -5,12 +5,16 @@
 
 Name:           python-%{modname}
 Version:        1.0.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Comprehensive WSGI web application library
 
 License:        BSD
 URL:            https://werkzeug.palletsprojects.com
 Source0:        %{pypi_source}
+
+# Handle IPv6 Addreess in X-Forwarded-For Proxy Fix
+# Upsream: https://github.com/pallets/werkzeug/pull/2263
+Patch0:         0001-ProxyFix-supports-IPv6.patch
 
 BuildArch:      noarch
 
@@ -95,6 +99,9 @@ PYTHONPATH=./src/ pytest-3
 %doc docs/_build/html examples
 
 %changelog
+* Fri Jan 21 2022 Harald Jensas <hjensas@redhat.com> - 1.0.1-4
+- X-Forwarded-For Proxy Fix for IPv6 addressing. rhbz#2018223
+
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 

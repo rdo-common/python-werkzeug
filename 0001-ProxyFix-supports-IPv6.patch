@@ -1,0 +1,59 @@
+diff -aur a/src/werkzeug/middleware/proxy_fix.py b/src/werkzeug/middleware/proxy_fix.py
+--- a/src/werkzeug/middleware/proxy_fix.py	2022-01-21 15:09:21.067849100 +0100
++++ b/src/werkzeug/middleware/proxy_fix.py	2022-01-21 15:05:11.903698283 +0100
+@@ -145,18 +145,19 @@
+ 
+         x_host = self._get_real_value(self.x_host, environ_get("HTTP_X_FORWARDED_HOST"))
+         if x_host:
+-            environ["HTTP_HOST"] = x_host
+-            parts = x_host.split(":", 1)
+-            environ["SERVER_NAME"] = parts[0]
+-            if len(parts) == 2:
+-                environ["SERVER_PORT"] = parts[1]
++            environ["HTTP_HOST"] = environ["SERVER_NAME"] = x_host
++            # "]" to check for IPv6 address without port
++            if ":" in x_host and not x_host.endswith("]"):
++                environ["SERVER_NAME"], environ["SERVER_PORT"] = x_host.rsplit(":", 1)
++
+ 
+         x_port = self._get_real_value(self.x_port, environ_get("HTTP_X_FORWARDED_PORT"))
+         if x_port:
+             host = environ.get("HTTP_HOST")
+             if host:
+-                parts = host.split(":", 1)
+-                host = parts[0] if len(parts) == 2 else host
++                # "]" to check for IPv6 address without port
++                if ":" in host and not host.endswith("]"):
++                    host = host.rsplit(":", 1)[0]
+                 environ["HTTP_HOST"] = "%s:%s" % (host, x_port)
+             environ["SERVER_PORT"] = x_port
+ 
+diff -aur a/tests/middleware/test_proxy_fix.py b/tests/middleware/test_proxy_fix.py
+--- a/tests/middleware/test_proxy_fix.py	2022-01-21 15:09:21.069849109 +0100
++++ b/tests/middleware/test_proxy_fix.py	2022-01-21 15:06:48.802147105 +0100
+@@ -138,6 +138,24 @@
+             "http://spam/eggs/",
+             id="prefix < for",
+         ),
++        pytest.param(
++            {"x_host": 1},
++            {"HTTP_HOST": "spam", "HTTP_X_FORWARDED_HOST": "[2001:db8::a]"},
++            "http://[2001:db8::a]/",
++            id="ipv6 host",
++        ),
++        pytest.param(
++            {"x_port": 1},
++            {"HTTP_HOST": "[2001:db8::a]", "HTTP_X_FORWARDED_PORT": "8080"},
++            "http://[2001:db8::a]:8080/",
++            id="ipv6 port, host without port",
++        ),
++        pytest.param(
++            {"x_port": 1},
++            {"HTTP_HOST": "[2001:db8::a]:9000", "HTTP_X_FORWARDED_PORT": "8080"},
++            "http://[2001:db8::a]:8080/",
++            id="ipv6 - port, host with port",
++        ),
+     ),
+ )
+ def test_proxy_fix(kwargs, base, url_root):
+
